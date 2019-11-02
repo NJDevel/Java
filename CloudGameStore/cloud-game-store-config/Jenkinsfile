@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('build') {
+            steps {
+              sh '''
+		 cd ./cloud-game-store-config
+
+                 ./mvnw -DskipTests clean compile
+              '''
+            }
+        }
+
+        stage('test') {
+            steps {
+              sh '''
+		 cd ./cloud-game-store-config
+
+
+                 ./mvnw test
+              '''
+            }
+        }
+
+        stage('deliver') {
+            steps {
+              sh '''
+		 cd ./cloud-game-store-config
+
+                 ./mvnw -DskipTests install
+              '''
+            }
+        }
+
+    }
+}
+
