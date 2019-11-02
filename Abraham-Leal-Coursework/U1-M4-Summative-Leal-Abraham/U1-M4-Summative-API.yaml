@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: U1-M4-Summative API
+  description: A simple service that allows you to see a word of the day, quote of the day, and asks an 8ball a question.
+  version: 0.0.1
+servers:
+  - url: http://localhost:8080
+    description: Local Development Server
+paths:
+  /quote:
+    get:
+      summary: Returns the quote of the day
+      responses:
+        '200':
+          description: Returns a random quote
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Quote'
+  /word:
+    get:
+      summary: Returns the word of the day
+      responses:
+        '200':
+          description: Returns a random word and it's definition
+          content:
+            aapplication/json:
+              schema:
+                $ref: '#/components/schemas/Definition'
+  /magic:
+    post:
+      summary: Returns the 8ball's response to your question.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Answer'
+      responses:
+        '200':
+          description: Returns the 8ball's answer
+          content:
+            aapplication/json:
+              schema:
+                $ref: '#/components/schemas/Answer'
+        '422' :
+          description: You must provide a valid question to the magic 8 ball
+        '400' :
+          description: Magic 8 ball would need a question to provide a response
+components:
+  schemas:
+    Quote:
+      properties:
+        author:
+          type: string
+        quote:
+          type: string
+    Definition:
+      properties:
+        word:
+          type: string
+        definition:
+          type: string
+    Answer:
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+      required:
+        - question

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.AbrahamLealU12M3Summative.service.ServiceLayerTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.521 s - in com.example.AbrahamLealU12M3Summative.service.ServiceLayerTest

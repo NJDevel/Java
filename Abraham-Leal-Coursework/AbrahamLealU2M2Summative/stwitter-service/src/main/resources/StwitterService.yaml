@@ -1,0 +1,195 @@
+openapi: 3.0.0
+info:
+  title: STwitter Service
+  description:
+    A simple service that allows CRUD operations for a simple twitter-like app system.
+  version: 0.0.1
+servers:
+  - url: 'http://localhost:8889'
+    description: Local dev server
+paths:
+  /posts:
+    #GET all posts, POST for post creation, and PUT for update post under this path
+    post:
+      summary: Creates a new post entry with the given information, supplied as a JSON object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostViewModel'
+      responses:
+        '201':
+          description: A post view model object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostViewModel'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete task information. Some required fields missing.
+
+    put:
+      summary: Update the entry for the post with the post information provided via JSON.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostViewModel'
+      responses:
+        '200':
+          description: Post successfully updated.
+        '422':
+          description: Post ID must be valid.
+
+  /post/{id}:
+    # GET, DELETE are under this path entry
+    get:
+      summary: Retrieves the entry for the post with the given ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task you would like to retrieve.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Post view model object matching given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostViewModel'
+
+    delete:
+      summary: Deletes the entry for the post with the given ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the post you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Post successfully deleted.
+
+  /posts/user/{poster_name}:
+    get:
+      summary: Retrieves the entries for the posts that match the poster name provided.
+      parameters:
+        - name: poster_name
+          in: path
+          required: true
+          description: Name of poster you would like to search posts for.
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: List of posts matching given poster.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostViewModel'
+                  
+  /comments:
+    #GET all comments, POST for comment creation, and PUT for update comment under this path
+    post:
+      summary: Creates a new comment entry with the given information, supplied as a JSON object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: A post view model object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostViewModel'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete comment information. Some required fields missing.
+
+    put:
+      summary: Update the entry for the comment with the comment information provided via JSON.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: Comment successfully updated.
+        '422':
+          description: Comment ID and Post ID must be valid.
+          
+  /comment/{id}:
+    delete:
+      summary: Deletes the entry for the comment with the given ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the comment you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Comment successfully deleted.
+
+components:
+  schemas:
+    PostViewModel:
+      properties:
+        postId:
+          type: integer
+        postDate:
+          type: string
+        posterName:
+          type: string
+        post:
+          type: string
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+      required:
+        - postDate
+        - posterName
+        - post
+            
+    Comment:
+      properties:
+        commentId:
+          type: integer
+        postId:
+          type: integer
+        createDate:
+          type: string
+        commenterName:
+          type: string
+        comment:
+          type: string
+      required: 
+        - postId
+        - createDate
+        - commenterName
+        - comment
+        
+    

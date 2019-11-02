@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.AbrahamLealU12M3Summative.dao.TaxDaoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.725 s - in com.example.AbrahamLealU12M3Summative.dao.TaxDaoTest

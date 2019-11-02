@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: Tasker Service
+  description:
+    A simple service that allows CRUD operations for a task app system.
+  version: 0.0.1
+servers:
+  - url: 'http://localhost:8080'
+    description: Local dev server
+paths:
+  /tasks:
+    #GET all tasks, POST for task creation, and PUT for update task under this path
+    post:
+      summary: Creates a new task entry with the given information, supplied as a JSON object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskViewModel'
+      responses:
+        '201':
+          description: A task view model object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskViewModel'
+        '400':
+          description: Invalid request syntax.
+        '422':
+          description: Incomplete task information. Some required fields missing.
+    get:
+      summary: Retrieves all the entries for task
+      responses:
+        '200':
+          description: A list of task view model objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskViewModel'
+
+    put:
+      summary: Update the entry for the game with the game information provided via JSON.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskViewModel'
+      responses:
+        '200':
+          description: Task successfully updated.
+        '422':
+          description: Task ID must be valid.
+
+  /tasks/{id}:
+    # GET, DELETE are under this path entry
+    get:
+      summary: Retrieves the entry for the task with the given ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task you would like to retrieve.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Task view model object matching given ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskViewModel'
+
+    delete:
+      summary: Deletes the entry for the task with the given ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the task you would like to delete.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: Task successfully deleted.
+
+  /tasks/category/{category}:
+    get:
+      summary: Retrieves the entries for the tasks that match the category provided.
+      parameters:
+        - name: category
+          in: path
+          required: true
+          description: Name of category you would like to search tasks for.
+          schema:
+            type: string
+            minimum: 1
+      responses:
+        '200':
+          description: List of tasks matching given category.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskViewModel'
+
+components:
+  schemas:
+    TaskViewModel:
+      properties:
+        Id:
+          type: integer
+        description:
+          type: string
+        createDate:
+          type: string
+        dueDate:
+          type: string
+        category:
+          type: string
+        advertisement:
+          type: string
+        quantity:
+          type: integer
+      required:
+        - description
+        - createDate
+        - dueDate
+        - category

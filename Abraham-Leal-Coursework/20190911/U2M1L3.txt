@@ -1,0 +1,14 @@
+Abraham Leal
+U2M1L3
+
+1. What is a service registry?
+  A service Registry is a database that registers microservices and provides discovery of microservices for clients trying to use the application or API that service registry maintains and serves.
+
+2. How does the service registry work?
+  A service Registry works by either allowing the micro service register itself by sending it requisite information that will allow the registry to identify it and know its paths so that it can pass along the information of how to use the microservice.  This passing of information is the second big piece of what a service registry does, which is known as service discovery.  This is the mechanism by which clients are able to find out what a microservice needs and where to provide it.
+  
+3. What are the advantages and disadvantages of using a service registry?
+  Disadvantages of using a service registry is that you need to maintain a high availability service registry cluster(to provide fault tolerance), which could be expensive in terms of computing resources. This is something additional to worry about and to maintain.  Advantages of using one are that service instances, virtual machines, and containers are often assigned ip's dynamically, which could lead to a high turn-over rate in terms of the addresses you'll need to keep track of to make your application function properly. Service registries can also help provide high availability and fault tolerance for microservices, as they keep track of what instances are active and healthy and can help indicate when new instances need to be started up.
+  
+  Google Doc:
+  https://docs.google.com/document/d/127i5jPX1IA7_x1mmhqswnGPtkciZeKnaw-JTsk0xIz0/edit?usp=sharing
